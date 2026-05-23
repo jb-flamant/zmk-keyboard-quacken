@@ -9,7 +9,7 @@
 // Uncomment one of the following lines if using a non-QWERTY layout:
 // (this sets an appropriate Symbols layer and relevant keyboard shortcuts)
 
-// #define KB_LAYOUT_AZERTY
+#define KB_LAYOUT_AZERTY
 // #define KB_LAYOUT_BEPO
 // #define KB_LAYOUT_BEPOLAR
 // #define KB_LAYOUT_DVORAK
@@ -22,7 +22,7 @@
 // Uncomment one of the following lines if using a non-Windows host:
 
 // #define MACOS
-// #define LINUX
+#define LINUX
 
 // [Experimental]
 // Uncomment one of the following lines to enable layout emulation:
@@ -46,7 +46,7 @@
 
 // #define HT_NONE
 // #define HT_THUMB_TAPS
-// #define HT_HOME_ROW_MODS  // (default behavior)
+#define HT_HOME_ROW_MODS  // (default behavior)
 // #define HT_TWO_THUMB_KEYS
 
 // Timing is key! Keep the default value if unsure.
@@ -84,7 +84,7 @@
 //  + Escape under the left thumb (direct access)
 // Highly recommended for Vim users, obviously. :-)
 
-// #define VIM_NAVIGATION
+#define VIM_NAVIGATION
 
 // [Experimental]
 // Uncomment the following line to enable the "mod-hold behavior" on the left
