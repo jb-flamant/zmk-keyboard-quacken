@@ -1,0 +1,168 @@
+// Miryoku keymap for the Quacken
+// Adapted from https://github.com/manna-harbour/miryoku
+// Reference port: https://github.com/jb-flamant/miryoku_zmk
+
+#ifndef CI_IGNORE_USER_SETTINGS
+  #include "settings.h"
+#endif
+
+#include "aliases.h"
+#include "mappings.dtsi"
+
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+
+// To enable RGB controls on the Media layer, also include <dt-bindings/zmk/rgb.h>
+// and replace the U_RGB_* defines below with `&rgb_ug RGB_*` (needs RGB hardware
+// and CONFIG_ZMK_RGB_UNDERGLOW=y). The Quacken has no RGB hardware so we no-op.
+//
+// To enable mouse keys on the Mouse layer, include <dt-bindings/zmk/pointing.h>
+// and replace U_MS_*/U_WH_*/U_BTN* defines with `&mmv MOVE_*`, `&msc SCRL_*`,
+// `&mkp LCLK/RCLK/MCLK`, plus add CONFIG_ZMK_POINTING=y to the build.
+
+// Layer indices (Miryoku canon)
+#define U_BASE  0
+#define U_MEDIA 1
+#define U_NAV   2
+#define U_MOUSE 3
+#define U_SYM   4
+#define U_NUM   5
+#define U_FUN   6
+
+// Miryoku helper aliases → ZMK built-ins
+#define U_NA       &none
+#define U_NP       &none
+#define U_NU       &none
+#define U_BOOT     &bootloader
+#define U_EP_TOG   &out OUT_TOG
+#define U_OUT_TOG  &out OUT_TOG
+#define U_BT_0     &bt BT_SEL 0
+#define U_BT_1     &bt BT_SEL 1
+#define U_BT_2     &bt BT_SEL 2
+#define U_BT_3     &bt BT_SEL 3
+#define U_CAPSWD   &caps_word
+
+// RGB (no hardware on Quacken -- placeholders)
+#define U_RGB_TOG  &none
+#define U_RGB_EFF  &none
+#define U_RGB_HUI  &none
+#define U_RGB_SAI  &none
+#define U_RGB_BRI  &none
+
+// Mouse (pointing not enabled by default -- placeholders)
+#define U_MS_L     &none
+#define U_MS_R     &none
+#define U_MS_U     &none
+#define U_MS_D     &none
+#define U_WH_L     &none
+#define U_WH_R     &none
+#define U_WH_U     &none
+#define U_WH_D     &none
+#define U_BTN1     &none
+#define U_BTN2     &none
+#define U_BTN3     &none
+
+/ {
+  behaviors {
+    // Home row mod: tap-preferred, Miryoku default timing
+    u_mt: u_mt {
+      compatible = "zmk,behavior-hold-tap";
+      #binding-cells = <2>;
+      tapping-term-ms = <200>;
+      quick-tap-ms = <0>;
+      flavor = "tap-preferred";
+      bindings = <&kp>, <&kp>;
+    };
+
+    // Thumb layer-tap: tap-preferred
+    u_lt: u_lt {
+      compatible = "zmk,behavior-hold-tap";
+      #binding-cells = <2>;
+      tapping-term-ms = <200>;
+      quick-tap-ms = <0>;
+      flavor = "tap-preferred";
+      bindings = <&mo>, <&kp>;
+    };
+  };
+
+  keymap {
+    compatible = "zmk,keymap";
+
+    // 0. BASE -- QWERTY scancodes (typed via host AZERTY) + GACS home row mods
+    base_layer: base_layer {
+      display-name = "Base";
+      bindings = <
+        &kp TAB    &kp Q         &kp W         &kp E         &kp R         &kp T          &kp Y &kp U         &kp I         &kp O         &kp P            &kp BSPC
+        &kp ESC    &u_mt LGUI A  &u_mt LALT S  &u_mt LCTRL D &u_mt LSHFT F &kp G          &kp H &u_mt LSHFT J &u_mt LCTRL K &u_mt LALT L  &u_mt LGUI SEMI  &kp RET
+        &kp LSHFT  &kp Z         &kp X         &kp C         &kp V         &kp B          &kp N &kp M         &kp COMMA     &kp DOT       &kp FSLH         &kp RSHFT
+                              &u_lt U_MEDIA ESC  &u_lt U_NAV SPACE  &u_lt U_MOUSE TAB     &u_lt U_SYM RET    &u_lt U_NUM BSPC  &u_lt U_FUN DEL
+      >;
+    };
+
+    // 1. MEDIA -- RGB / consumer media / BT profiles (left thumb outer held)
+    media_layer: media_layer {
+      display-name = "Media";
+      bindings = <
+        &trans  U_BOOT      U_NP        U_NP        &to U_BASE  U_NA       U_RGB_TOG  U_RGB_EFF    U_RGB_HUI    U_RGB_SAI    U_RGB_BRI  &trans
+        &trans  &kp LGUI    &kp LALT    &kp LCTRL   &kp LSHFT   U_NA       U_EP_TOG   &kp C_PREV   &kp C_VOL_DN &kp C_VOL_UP &kp C_NEXT &trans
+        &trans  U_NA        &kp RALT    &to U_FUN   &to U_MEDIA U_NA       U_OUT_TOG  U_BT_0       U_BT_1       U_BT_2       U_BT_3     &trans
+                                        U_NA        U_NA        U_NA       &kp C_STOP &kp C_PP     &kp C_MUTE
+      >;
+    };
+
+    // 2. NAV -- clipboard + arrow cluster + caps word (left thumb middle held)
+    nav_layer: nav_layer {
+      display-name = "Nav";
+      bindings = <
+        &trans  U_BOOT      U_NP        U_NP        &to U_BASE  U_NA       X_REDO     X_PASTE      X_COPY       X_CUT        X_UNDO     &trans
+        &trans  &kp LGUI    &kp LALT    &kp LCTRL   &kp LSHFT   U_NA       U_CAPSWD   &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT  &trans
+        &trans  U_NA        &kp RALT    &to U_NUM   &to U_NAV   U_NA       &kp INS    &kp HOME     &kp PG_DN    &kp PG_UP    &kp END    &trans
+                                        U_NA        U_NA        U_NA       &kp RET    &kp BSPC     &kp DEL
+      >;
+    };
+
+    // 3. MOUSE -- pointer / scroll / buttons (left thumb inner held)
+    mouse_layer: mouse_layer {
+      display-name = "Mouse";
+      bindings = <
+        &trans  U_BOOT      U_NP        U_NP        &to U_BASE  U_NA       X_REDO     X_PASTE      X_COPY       X_CUT        X_UNDO     &trans
+        &trans  &kp LGUI    &kp LALT    &kp LCTRL   &kp LSHFT   U_NA       U_NU       U_MS_L       U_MS_D       U_MS_U       U_MS_R     &trans
+        &trans  U_NA        &kp RALT    &to U_SYM   &to U_MOUSE U_NA       U_NU       U_WH_L       U_WH_D       U_WH_U       U_WH_R     &trans
+                                        U_NA        U_NA        U_NA       U_BTN2     U_BTN1       U_BTN3
+      >;
+    };
+
+    // 4. SYM -- AZERTY-aware symbols via S_* aliases (right thumb inner held)
+    sym_layer: sym_layer {
+      display-name = "Sym";
+      bindings = <
+        &trans  S_LBRC      S_AMPS      S_STAR      S_LPAR      S_RBRC     U_NA       &to U_BASE   U_NP         U_NP         U_BOOT     &trans
+        &trans  S_COLON     S_DLLR      S_PRCNT     S_CARET     S_PLUS     U_NA       &kp LSHFT    &kp LCTRL    &kp LALT     &kp LGUI   &trans
+        &trans  S_TILDE     S_EXCL      S_AT        S_HASH      S_PIPE     U_NA       &to U_SYM    &to U_MOUSE  &kp RALT     U_NA       &trans
+                                        S_LPAR      S_RPAR      S_UNDER    U_NA       U_NA         U_NA
+      >;
+    };
+
+    // 5. NUM -- AZERTY-aware numpad via S_* aliases (right thumb middle held)
+    num_layer: num_layer {
+      display-name = "Num";
+      bindings = <
+        &trans  S_LBKT      S_N7        S_N8        S_N9        S_RBKT     U_NA       &to U_BASE   U_NP         U_NP         U_BOOT     &trans
+        &trans  S_SEMI      S_N4        S_N5        S_N6        S_EQUAL    U_NA       &kp LSHFT    &kp LCTRL    &kp LALT     &kp LGUI   &trans
+        &trans  S_GRAVE     S_N1        S_N2        S_N3        S_BSLH     U_NA       &to U_NUM    &to U_NAV    &kp RALT     U_NA       &trans
+                                        S_DOT       S_N0        S_MINUS    U_NA       U_NA         U_NA
+      >;
+    };
+
+    // 6. FUN -- function keys + system (right thumb outer held)
+    fun_layer: fun_layer {
+      display-name = "Fun";
+      bindings = <
+        &trans  &kp F12     &kp F7      &kp F8      &kp F9      &kp PSCRN       U_NA  &to U_BASE   U_NP         U_NP         U_BOOT     &trans
+        &trans  &kp F11     &kp F4      &kp F5      &kp F6      &kp SLCK        U_NA  &kp LSHFT    &kp LCTRL    &kp LALT     &kp LGUI   &trans
+        &trans  &kp F10     &kp F1      &kp F2      &kp F3      &kp PAUSE_BREAK U_NA  &to U_FUN    &to U_MEDIA  &kp RALT     U_NA       &trans
+                                        &kp K_APP   &kp SPACE   &kp TAB         U_NA  U_NA         U_NA
+      >;
+    };
+  };
+};

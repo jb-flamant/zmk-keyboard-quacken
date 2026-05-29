@@ -74,3 +74,11 @@ include:
     cmake-args: >
       -DKEYMAP_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/keymaps/quacken.keymap
       -DDTS_EXTRA_CPP_FLAGS="-DCI_IGNORE_USER_SETTINGS;-DKB_LAYOUT_QWERTY_INTL;-DKB_EMULATION_QWERTY_LAFAYETTE"
+
+  # Miryoku keymap on Azerty
+  - board: sparkfun_pro_micro_rp2040//zmk
+    shield: tester_pro_micro
+    artifact-name: quacken_miryoku_default
+    cmake-args: >
+      -DKEYMAP_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/keymaps/miryoku.keymap
+      -DDTS_EXTRA_CPPFLAGS="-DCI_IGNORE_USER_SETTINGS;-DKB_LAYOUT_AZERTY"
