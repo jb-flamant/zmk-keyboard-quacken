@@ -35,3 +35,22 @@ include:
     cmake-args: >
       -DKEYMAP_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/keymaps/miryoku.keymap
       -DCONFIG_ZMK_STUDIO=y
+
+  # Quacken Zero + SparkFun RP2040 -- Miryoku keymap with Selenium NumRow
+  - board: sparkfun_pro_micro_rp2040//zmk
+    shield: quacken_zero
+    artifact-name: quacken_zero_miryoku_numrow
+    snippet: studio-rpc-usb-uart
+    cmake-args: >
+      -DKEYMAP_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/keymaps/miryoku.keymap
+      -DDTS_EXTRA_CPPFLAGS="-DMIRYOKU_USE_NUMROW"
+      -DCONFIG_ZMK_STUDIO=y
+
+  # Quacken Flex -- Miryoku keymap with Selenium NumRow
+  - board: quacken_flex
+    artifact-name: quacken_flex_miryoku_numrow
+    snippet: studio-rpc-usb-uart
+    cmake-args: >
+      -DKEYMAP_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/keymaps/miryoku.keymap
+      -DDTS_EXTRA_CPPFLAGS="-DMIRYOKU_USE_NUMROW"
+      -DCONFIG_ZMK_STUDIO=y
