@@ -103,9 +103,9 @@
     media_layer: media_layer {
       display-name = "Media";
       bindings = <
-        &trans  U_BOOT      U_NP        U_NP        &to U_BASE  U_NA       U_RGB_TOG  U_RGB_EFF    U_RGB_HUI    U_RGB_SAI    U_RGB_BRI  &trans
+        &trans  U_BOOT      U_NP        U_NP        U_NA  U_NA       U_RGB_TOG  U_RGB_EFF    U_RGB_HUI    U_RGB_SAI    U_RGB_BRI  &trans
         &trans  &kp LGUI    &kp LALT    &kp LCTRL   &kp LSHFT   U_NA       U_EP_TOG   &kp C_PREV   &kp C_VOL_DN &kp C_VOL_UP &kp C_NEXT &trans
-        &trans  U_NA        &kp RALT    &to U_FUN   &to U_MEDIA U_NA       U_OUT_TOG  U_BT_0       U_BT_1       U_BT_2       U_BT_3     &trans
+        &trans  U_NA        &kp RALT    U_NA   U_NA U_NA       U_OUT_TOG  U_BT_0       U_BT_1       U_BT_2       U_BT_3     &trans
                                         U_NA        U_NA        U_NA       &kp C_STOP &kp C_PP     &kp C_MUTE
       >;
     };
@@ -114,9 +114,9 @@
     nav_layer: nav_layer {
       display-name = "Nav";
       bindings = <
-        &trans  U_BOOT      U_NP        U_NP        &to U_BASE  U_NA       X_REDO     X_PASTE      X_COPY       X_CUT        X_UNDO     &trans
+        &trans  U_BOOT      U_NP        U_NP        U_NA  U_NA       X_REDO     X_PASTE      X_COPY       X_CUT        X_UNDO     &trans
         &trans  &kp LGUI    &kp LALT    &kp LCTRL   &kp LSHFT   U_NA       U_CAPSWD   &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT  &trans
-        &trans  U_NA        &kp RALT    &to U_NUM   &to U_NAV   U_NA       &kp INS    &kp HOME     &kp PG_DN    &kp PG_UP    &kp END    &trans
+        &trans  U_NA        &kp RALT    U_NA   U_NA   U_NA       &kp INS    &kp HOME     &kp PG_DN    &kp PG_UP    &kp END    &trans
                                         U_NA        U_NA        U_NA       &kp RET    &kp BSPC     &kp DEL
       >;
     };
@@ -125,9 +125,9 @@
     mouse_layer: mouse_layer {
       display-name = "Mouse";
       bindings = <
-        &trans  U_BOOT      U_NP        U_NP        &to U_BASE  U_NA       X_REDO     X_PASTE      X_COPY       X_CUT        X_UNDO     &trans
+        &trans  U_BOOT      U_NP        U_NP        U_NA  U_NA       X_REDO     X_PASTE      X_COPY       X_CUT        X_UNDO     &trans
         &trans  &kp LGUI    &kp LALT    &kp LCTRL   &kp LSHFT   U_NA       U_NU       U_MS_L       U_MS_D       U_MS_U       U_MS_R     &trans
-        &trans  U_NA        &kp RALT    &to U_SYM   &to U_MOUSE U_NA       U_NU       U_WH_L       U_WH_D       U_WH_U       U_WH_R     &trans
+        &trans  U_NA        &kp RALT    U_NA   U_NA U_NA       U_NU       U_WH_L       U_WH_D       U_WH_U       U_WH_R     &trans
                                         U_NA        U_NA        U_NA       U_BTN2     U_BTN1       U_BTN3
       >;
     };
@@ -156,9 +156,9 @@
 #else
       display-name = "Num";
       bindings = <
-        &trans  S_LBKT      S_N7        S_N8        S_N9        S_RBKT     U_NA       &to U_BASE   U_NP         U_NP         U_BOOT     &trans
+        &trans  S_LBKT      S_N7        S_N8        S_N9        S_RBKT     U_NA       U_NA   U_NP         U_NP         U_BOOT     &trans
         &trans  S_SEMI      S_N4        S_N5        S_N6        S_EQUAL    U_NA       &kp LSHFT    &kp LCTRL    &kp LALT     &kp LGUI   &trans
-        &trans  S_GRAVE     S_N1        S_N2        S_N3        S_BSLH     U_NA       &to U_NUM    &to U_NAV    &kp RALT     U_NA       &trans
+        &trans  S_GRAVE     S_N1        S_N2        S_N3        S_BSLH     U_NA       U_NA    U_NA    &kp RALT     U_NA       &trans
                                         S_DOT       S_N0        S_MINUS    U_NA       U_NA         U_NA
       >;
 #endif
@@ -168,9 +168,9 @@
     fun_layer: fun_layer {
       display-name = "Fun";
       bindings = <
-        &trans  &kp F12     &kp F7      &kp F8      &kp F9      &kp PSCRN       U_NA  &to U_BASE   U_NP         U_NP         U_BOOT     &trans
+        &trans  &kp F12     &kp F7      &kp F8      &kp F9      &kp PSCRN       U_NA  U_NA   U_NP         U_NP         U_BOOT     &trans
         &trans  &kp F11     &kp F4      &kp F5      &kp F6      &kp SLCK        U_NA  &kp LSHFT    &kp LCTRL    &kp LALT     &kp LGUI   &trans
-        &trans  &kp F10     &kp F1      &kp F2      &kp F3      &kp PAUSE_BREAK U_NA  &to U_FUN    &to U_MEDIA  &kp RALT     U_NA       &trans
+        &trans  &kp F10     &kp F1      &kp F2      &kp F3      &kp PAUSE_BREAK U_NA  U_NA    U_NA  &kp RALT     U_NA       &trans
                                         &kp K_APP   &kp SPACE   &kp TAB         U_NA  U_NA         U_NA
       >;
     };
