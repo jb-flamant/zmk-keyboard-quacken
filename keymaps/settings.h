@@ -103,3 +103,15 @@
 // Beware: this increases the typing load of the left thumb.
 
 // #define LEFT_HAND_SPACE
+
+
+/******************************************************************************
+ * Miryoku (only applies when building keymaps/miryoku.keymap)
+ *****************************************************************************/
+
+// Uncomment to replace the canonical Miryoku Num (numpad) layer with the
+// Selenium-style NumRow layer: numbers on the home row across both hands,
+// shift+numbers on the top row, AZERTY punctuation on the bottom-right,
+// thumbs LH = . / AltGr / -.
+
+// #define MIRYOKU_USE_NUMROW
