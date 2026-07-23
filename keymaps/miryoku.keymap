@@ -114,7 +114,7 @@
     nav_layer: nav_layer {
       display-name = "Nav";
       bindings = <
-        &trans  ESC         U_NP        U_NP        U_NA  U_NA       X_REDO     X_PASTE      X_COPY       X_CUT        X_UNDO     &trans
+        &trans  &kp ESC         U_NP        U_NP        U_NA  U_NA       X_REDO     X_PASTE      X_COPY       X_CUT        X_UNDO     &trans
         &trans  &kp LGUI    &kp LALT    &kp LCTRL   &kp LSHFT   U_NA       U_CAPSWD   &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT  &trans
         &trans  U_NA        &kp RALT    U_NA   U_NA   U_NA       &kp INS    &kp HOME     &kp PG_DN    &kp PG_UP    &kp END    &trans
                                         U_NA        U_NA        U_NA       &kp RET    &kp BSPC     &kp DEL
