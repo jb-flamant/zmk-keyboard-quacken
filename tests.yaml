@@ -82,6 +82,7 @@ include:
     cmake-args: >
       -DKEYMAP_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/keymaps/miryoku.keymap
       -DDTS_EXTRA_CPPFLAGS="-DCI_IGNORE_USER_SETTINGS;-DKB_LAYOUT_AZERTY"
+      -DCONFIG_ZMK_POINTING=y
 
   # Miryoku keymap on Azerty with the Selenium-style NumRow layer
   - board: sparkfun_pro_micro_rp2040//zmk
@@ -90,3 +91,4 @@ include:
     cmake-args: >
       -DKEYMAP_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/keymaps/miryoku.keymap
       -DDTS_EXTRA_CPPFLAGS="-DCI_IGNORE_USER_SETTINGS;-DKB_LAYOUT_AZERTY;-DMIRYOKU_USE_NUMROW"
+      -DCONFIG_ZMK_POINTING=y

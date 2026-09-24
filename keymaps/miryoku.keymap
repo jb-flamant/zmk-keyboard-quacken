@@ -11,14 +11,13 @@
 
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/pointing.h>
 
 // To enable RGB controls on the Media layer, also include <dt-bindings/zmk/rgb.h>
 // and replace the U_RGB_* defines below with `&rgb_ug RGB_*` (needs RGB hardware
 // and CONFIG_ZMK_RGB_UNDERGLOW=y). The Quacken has no RGB hardware so we no-op.
 //
-// To enable mouse keys on the Mouse layer, include <dt-bindings/zmk/pointing.h>
-// and replace U_MS_*/U_WH_*/U_BTN* defines with `&mmv MOVE_*`, `&msc SCRL_*`,
-// `&mkp LCLK/RCLK/MCLK`, plus add CONFIG_ZMK_POINTING=y to the build.
+// Mouse keys on the Mouse layer require CONFIG_ZMK_POINTING=y (set in build.yaml).
 
 // Layer indices (Miryoku canon)
 #define U_BASE  0
@@ -49,18 +48,18 @@
 #define U_RGB_SAI  &none
 #define U_RGB_BRI  &none
 
-// Mouse (pointing not enabled by default -- placeholders)
-#define U_MS_L     &none
-#define U_MS_R     &none
-#define U_MS_U     &none
-#define U_MS_D     &none
-#define U_WH_L     &none
-#define U_WH_R     &none
-#define U_WH_U     &none
-#define U_WH_D     &none
-#define U_BTN1     &none
-#define U_BTN2     &none
-#define U_BTN3     &none
+// Mouse keys
+#define U_MS_L     &mmv MOVE_LEFT
+#define U_MS_R     &mmv MOVE_RIGHT
+#define U_MS_U     &mmv MOVE_UP
+#define U_MS_D     &mmv MOVE_DOWN
+#define U_WH_L     &msc SCRL_LEFT
+#define U_WH_R     &msc SCRL_RIGHT
+#define U_WH_U     &msc SCRL_UP
+#define U_WH_D     &msc SCRL_DOWN
+#define U_BTN1     &mkp LCLK
+#define U_BTN2     &mkp RCLK
+#define U_BTN3     &mkp MCLK
 
 / {
   behaviors {
@@ -95,7 +94,7 @@
         &trans    &kp Q         &kp W         &kp E         &kp R         &kp T          &kp Y &kp U         &kp I         &kp O           &kp P            &trans
         &trans    &u_mt LGUI A  &u_mt LALT S  &u_mt LCTRL D &u_mt LSHFT F &kp G          &kp H &u_mt LSHFT J &u_mt LCTRL K &u_mt LALT L    &u_mt LGUI SEMI  &trans
         &trans    &kp Z         &kp X         &kp C         &kp V         &kp B          &kp N &kp M         &kp COMMA     &u_mt RALT DOT  &kp FSLH         &trans
-                              &u_lt U_MEDIA ESC  &u_lt U_NAV SPACE  &u_mt LSHFT TAB     &u_lt U_SYM RET    &u_lt U_NUM BSPC  &u_lt U_FUN DEL
+                              &u_lt U_MEDIA ESC  &u_lt U_NAV SPACE  &u_lt U_MOUSE TAB     &u_lt U_SYM RET    &u_lt U_NUM BSPC  &u_lt U_FUN DEL
       >;
     };
 
@@ -122,11 +121,12 @@
     };
 
     // 3. MOUSE -- pointer / scroll / buttons (left thumb inner held)
+    //          -- clicks on the left home row: S = right, D = middle, F = left
     mouse_layer: mouse_layer {
       display-name = "Mouse";
       bindings = <
         &trans  U_BOOT      U_NP        U_NP        U_NA  U_NA       X_REDO     X_PASTE      X_COPY       X_CUT        X_UNDO     &trans
-        &trans  &kp LGUI    &kp LALT    &kp LCTRL   &kp LSHFT   U_NA       U_NU       U_MS_L       U_MS_D       U_MS_U       U_MS_R     &trans
+        &trans  &kp LGUI    U_BTN2      U_BTN3      U_BTN1      U_NA       U_NU       U_MS_L       U_MS_D       U_MS_U       U_MS_R     &trans
         &trans  U_NA        &kp RALT    U_NA   U_NA U_NA       U_NU       U_WH_L       U_WH_D       U_WH_U       U_WH_R     &trans
                                         U_NA        U_NA        U_NA       U_BTN2     U_BTN1       U_BTN3
       >;
