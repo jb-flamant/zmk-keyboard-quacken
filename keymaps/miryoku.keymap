@@ -88,12 +88,13 @@
     compatible = "zmk,keymap";
 
     // 0. BASE -- QWERTY scancodes (typed via host AZERTY) + GACS home row mods
+    //         -- bottom corners: hold W (Z) for Media, hold ! (FSLH) for Fun
     base_layer: base_layer {
       display-name = "Base";
       bindings = <
         &trans    &kp Q         &kp W         &kp E         &kp R         &kp T          &kp Y &kp U         &kp I         &kp O           &kp P            &trans
         &trans    &u_mt LGUI A  &u_mt LALT S  &u_mt LCTRL D &u_mt LSHFT F &kp G          &kp H &u_mt LSHFT J &u_mt LCTRL K &u_mt LALT L    &u_mt LGUI SEMI  &trans
-        &trans    &kp Z         &kp X         &kp C         &kp V         &kp B          &kp N &kp M         &kp COMMA     &u_mt RALT DOT  &kp FSLH         &trans
+        &trans    &u_lt U_MEDIA Z &kp X         &kp C         &kp V         &kp B          &kp N &kp M         &kp COMMA     &u_mt RALT DOT  &u_lt U_FUN FSLH &trans
                               &u_lt U_MEDIA ESC  &u_lt U_NAV SPACE  &u_lt U_MOUSE TAB     &u_lt U_SYM RET    &u_lt U_NUM BSPC  &u_lt U_FUN DEL
       >;
     };
