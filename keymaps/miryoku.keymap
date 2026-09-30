@@ -126,9 +126,9 @@
     mouse_layer: mouse_layer {
       display-name = "Mouse";
       bindings = <
-        &trans  U_BOOT      U_NP        U_NP        U_NA  U_NA       X_REDO     X_PASTE      X_COPY       X_CUT        X_UNDO     &trans
+        &trans  U_BOOT      U_NP        U_NP        U_NA        U_NA       X_REDO     X_PASTE      X_COPY       X_CUT        X_UNDO     &trans
         &trans  &kp LGUI    U_BTN2      U_BTN3      U_BTN1      U_NA       U_NU       U_MS_L       U_MS_D       U_MS_U       U_MS_R     &trans
-        &trans  U_NA        &kp RALT    U_NA   U_NA U_NA       U_NU       U_WH_L       U_WH_D       U_WH_U       U_WH_R     &trans
+        &trans  U_WH_L      U_WH_D      U_WH_U      U_WH_R      U_NA       U_NU       U_WH_L       U_WH_D       U_WH_U       U_WH_R     &trans
                                         U_NA        U_NA        U_NA       U_BTN2     U_BTN1       U_BTN3
       >;
     };
