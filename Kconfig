@@ -6,3 +6,10 @@ config ZMK_BEHAVIOR_DEAD_KEY
   bool
   default y
   depends on DT_HAS_ZMK_BEHAVIOR_DEAD_KEY_ENABLED
+
+config INPUT_TRACKBALL_I2C
+  bool
+  default y
+  depends on DT_HAS_JBFLAMANT_TRACKBALL_I2C_ENABLED
+  depends on INPUT
+  select I2C

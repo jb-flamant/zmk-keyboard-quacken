@@ -186,6 +186,23 @@ Note: local builds use the `zmk` tree, no matter what’s specified in the
 `west update` when modifying the `zmk` tree (e.g. checking out another branch/commit).
 
 
+## I2C Trackball (Quacken Flex)
+
+The `quacken_flex_miryoku_trackball` firmware polls a [trackball] exposed as an
+I2C target (address `0x54`) and sends its motion and buttons as a HID mouse.
+
+- Plug it on the Qwiic connector J4, i.e. the `i2c0` bus (GP28 SDA / GP29 SCL),
+  shared with the PCAL6524 IO expander. The 2.2k pull-ups are on the board.
+- J4 pinout is 1 = SCL, 2 = SDA, 3 = 3V3, 4 = GND: this is the reverse of the
+  SparkFun Qwiic order, so check the cable before plugging the trackball.
+- When the trackball is powered by the Qwiic 3V3, do not plug its own USB port.
+- Enabled by `boards/ergonautes/quacken_flex/trackball_i2c.{overlay,conf}`; the
+  driver lives in `src/drivers/input/trackball_i2c.c`.
+- Axis directions are not validated on hardware yet.
+
+[trackball]: https://github.com/jb-flamant/trackball/tree/feat/i2c-target
+
+
 ## Flash
 
 To flash <img src="flash.svg"> your keyboard with a `.uf2` file:

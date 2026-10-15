@@ -1,0 +1,17 @@
+description: |
+  I2C Trackball
+
+  Trackball exposed as an I2C target (jb-flamant/trackball, branch
+  feat/i2c-target), polled by the keyboard. Reports relative motion
+  (INPUT_REL_X/Y) and buttons (INPUT_BTN_0..2) to be consumed by a
+  `zmk,input-listener`.
+
+compatible: "jbflamant,trackball-i2c"
+
+include: i2c-device.yaml
+
+properties:
+  poll-period-ms:
+    type: int
+    default: 10
+    description: Polling period of the trackball registers, in milliseconds.

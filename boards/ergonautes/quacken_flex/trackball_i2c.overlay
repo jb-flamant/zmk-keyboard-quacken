@@ -1,0 +1,19 @@
+/*
+ * Opt-in I2C trackball (jb-flamant/trackball, branch feat/i2c-target).
+ * Plugged on the Qwiic connector J4, i.e. the i2c0 bus (GP28 SDA / GP29 SCL),
+ * shared with the PCAL6524 IO expander (@0x23). Pull-ups are on the board.
+ */
+
+&i2c0 {
+    trackball: trackball@54 {
+        compatible = "jbflamant,trackball-i2c";
+        reg = <0x54>;
+    };
+};
+
+/ {
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
+    };
+};

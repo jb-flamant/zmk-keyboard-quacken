@@ -58,3 +58,14 @@ include:
       -DDTS_EXTRA_CPPFLAGS="-DMIRYOKU_USE_NUMROW"
       -DCONFIG_ZMK_STUDIO=y
       -DCONFIG_ZMK_POINTING=y
+
+  # Quacken Flex -- Miryoku keymap with the I2C trackball on the Qwiic connector
+  - board: quacken_flex
+    artifact-name: quacken_flex_miryoku_trackball
+    snippet: studio-rpc-usb-uart
+    cmake-args: >
+      -DKEYMAP_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/keymaps/miryoku.keymap
+      -DEXTRA_DTC_OVERLAY_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/boards/ergonautes/quacken_flex/trackball_i2c.overlay
+      -DEXTRA_CONF_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/boards/ergonautes/quacken_flex/trackball_i2c.conf
+      -DCONFIG_ZMK_STUDIO=y
+      -DCONFIG_ZMK_POINTING=y
