@@ -102,3 +102,13 @@ include:
       -DEXTRA_CONF_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/boards/ergonautes/quacken_flex/trackball_i2c.conf
       -DDTS_EXTRA_CPPFLAGS="-DCI_IGNORE_USER_SETTINGS;-DKB_LAYOUT_AZERTY"
       -DCONFIG_ZMK_POINTING=y
+
+  # Miryoku keymap on Azerty with the NumRow layer and the I2C trackball (Quacken Flex only)
+  - board: quacken_flex
+    artifact-name: quacken_flex_miryoku_numrow_trackball
+    cmake-args: >
+      -DKEYMAP_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/keymaps/miryoku.keymap
+      -DEXTRA_DTC_OVERLAY_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/boards/ergonautes/quacken_flex/trackball_i2c.overlay
+      -DEXTRA_CONF_FILE=/__w/zmk-keyboard-quacken/zmk-keyboard-quacken/boards/ergonautes/quacken_flex/trackball_i2c.conf
+      -DDTS_EXTRA_CPPFLAGS="-DCI_IGNORE_USER_SETTINGS;-DKB_LAYOUT_AZERTY;-DMIRYOKU_USE_NUMROW"
+      -DCONFIG_ZMK_POINTING=y

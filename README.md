@@ -188,8 +188,9 @@ Note: local builds use the `zmk` tree, no matter what’s specified in the
 
 ## I2C Trackball (Quacken Flex)
 
-The `quacken_flex_miryoku_trackball` firmware polls a [trackball] exposed as an
-I2C target (address `0x54`) and sends its motion and buttons as a HID mouse.
+The `quacken_flex_miryoku_trackball` and `quacken_flex_miryoku_numrow_trackball`
+firmwares poll a [trackball] exposed as an I2C target (address `0x54`) and send
+its motion and buttons as a HID mouse.
 
 - Plug it on the Qwiic connector J4, i.e. the `i2c0` bus (GP28 SDA / GP29 SCL),
   shared with the PCAL6524 IO expander. The 2.2k pull-ups are on the board.
