@@ -20,13 +20,7 @@
 // Mouse keys on the Mouse layer require CONFIG_ZMK_POINTING=y (set in build.yaml).
 
 // Layer indices (Miryoku canon)
-#define U_BASE  0
-#define U_MEDIA 1
-#define U_NAV   2
-#define U_MOUSE 3
-#define U_SYM   4
-#define U_NUM   5
-#define U_FUN   6
+#include "miryoku_layers.h"
 
 // Miryoku helper aliases → ZMK built-ins
 #define U_NA       &none

@@ -4,6 +4,10 @@
  * shared with the PCAL6524 IO expander (@0x23). Pull-ups are on the board.
  */
 
+#include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+#include "../../../keymaps/miryoku_layers.h"
+
 &i2c0 {
     trackball: trackball@54 {
         compatible = "jbflamant,trackball-i2c";
@@ -12,8 +16,26 @@
 };
 
 / {
+    /* Y -> vertical wheel; X -> REL_MISC, ignored by the input listener */
+    trackball_y_to_wheel: trackball_y_to_wheel {
+        compatible = "zmk,input-processor-code-mapper";
+        #input-processor-cells = <0>;
+        type = <INPUT_EV_REL>;
+        map = <INPUT_REL_Y INPUT_REL_WHEEL>, <INPUT_REL_X INPUT_REL_MISC>;
+    };
+
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
+
+        /* Mouse layer active: the trackball scrolls vertically.
+         * Ball up = scroll up; 20 counts per wheel step (as the trackball
+         * firmware SCROLL_DIV), remainders are kept. */
+        scroller {
+            layers = <U_MOUSE>;
+            input-processors = <&trackball_y_to_wheel
+                                &zip_scroll_transform INPUT_TRANSFORM_Y_INVERT
+                                &zip_scroll_scaler 1 20>;
+        };
     };
 };
