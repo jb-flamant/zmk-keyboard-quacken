@@ -199,8 +199,8 @@ its motion and buttons as a HID mouse.
 - When the trackball is powered by the Qwiic 3V3, do not plug its own USB port.
 - Enabled by `boards/ergonautes/quacken_flex/trackball_i2c.{overlay,conf}`; the
   driver lives in `src/drivers/input/trackball_i2c.c`.
-- While the Mouse layer is held, the trackball scrolls vertically (horizontal
-  motion is ignored); tune the speed with `&zip_scroll_scaler 1 20` in the overlay.
+- While the Mouse layer and E are held, the trackball scrolls vertically
+  (horizontal motion is ignored); tune the speed with `&zip_scroll_scaler 1 20` in the overlay.
 - Axis directions are not validated on hardware yet.
 
 [trackball]: https://github.com/jb-flamant/trackball/tree/feat/i2c-target

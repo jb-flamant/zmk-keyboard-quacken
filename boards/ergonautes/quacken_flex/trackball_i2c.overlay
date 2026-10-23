@@ -28,11 +28,11 @@
         compatible = "zmk,input-listener";
         device = <&trackball>;
 
-        /* Mouse layer active: the trackball scrolls vertically.
+        /* Mouse layer + E held (Scroll layer): the trackball scrolls vertically.
          * Ball up = scroll up; 20 counts per wheel step (as the trackball
          * firmware SCROLL_DIV), remainders are kept. */
         scroller {
-            layers = <U_MOUSE>;
+            layers = <U_SCROLL>;
             input-processors = <&trackball_y_to_wheel
                                 &zip_scroll_transform INPUT_TRANSFORM_Y_INVERT
                                 &zip_scroll_scaler 1 20>;

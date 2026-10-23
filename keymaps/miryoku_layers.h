@@ -9,3 +9,4 @@
 #define U_SYM   4
 #define U_NUM   5
 #define U_FUN   6
+#define U_SCROLL 7
