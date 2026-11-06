@@ -15,3 +15,10 @@ properties:
     type: int
     default: 10
     description: Polling period of the trackball registers, in milliseconds.
+  absent-poll-period-ms:
+    type: int
+    default: 1000
+    description: |
+      Polling period, in milliseconds, once the trackball has stopped answering
+      (unplugged). The bus is shared with the right-half IO expander, so failed
+      reads are kept rare; normal polling resumes as soon as it answers again.

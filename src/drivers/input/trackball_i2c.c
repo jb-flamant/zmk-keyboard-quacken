@@ -26,15 +26,20 @@ LOG_MODULE_REGISTER(trackball_i2c, CONFIG_INPUT_LOG_LEVEL);
 #define TRACKBALL_WHO_AM_I     0x3C
 #define TRACKBALL_BUTTON_COUNT 3
 
+/* Consecutive failed reads after which the trackball is considered absent. */
+#define TRACKBALL_ABSENT_THRESHOLD 3
+
 struct trackball_i2c_config {
     struct i2c_dt_spec bus;
     uint32_t poll_period_ms;
+    uint32_t absent_poll_period_ms;
 };
 
 struct trackball_i2c_data {
     const struct device *dev;
     struct k_work_delayable poll_work;
     uint8_t buttons;
+    uint8_t failures;
 };
 
 static void trackball_i2c_poll(struct k_work *work) {
@@ -43,13 +48,33 @@ static void trackball_i2c_poll(struct k_work *work) {
     const struct device *dev = data->dev;
     const struct trackball_i2c_config *cfg = dev->config;
     uint8_t buf[3]; /* BUTTONS, DX, DY */
+    uint32_t period_ms = cfg->poll_period_ms;
 
-    /* The trackball may be unplugged: just retry on the next period. */
+    /*
+     * The trackball may be unplugged. The bus is shared with the IO expander
+     * that scans the right half: every unanswered read (NACK) disturbs it, so
+     * once the trackball looks absent, probe it slowly instead of every
+     * poll period. Normal polling resumes as soon as it answers again.
+     */
     int ret = i2c_burst_read_dt(&cfg->bus, TRACKBALL_REG_BUTTONS, buf, sizeof(buf));
     if (ret != 0) {
-        LOG_DBG("Read failed (%d)", ret);
+        if (data->failures < TRACKBALL_ABSENT_THRESHOLD) {
+            data->failures++;
+            if (data->failures == TRACKBALL_ABSENT_THRESHOLD) {
+                LOG_WRN("Trackball not responding (%d), probing every %u ms", ret,
+                        cfg->absent_poll_period_ms);
+            }
+        }
+        if (data->failures >= TRACKBALL_ABSENT_THRESHOLD) {
+            period_ms = cfg->absent_poll_period_ms;
+        }
         goto reschedule;
     }
+
+    if (data->failures >= TRACKBALL_ABSENT_THRESHOLD) {
+        LOG_INF("Trackball responding again");
+    }
+    data->failures = 0;
 
     const uint8_t buttons = buf[0];
     const int8_t dx = (int8_t)buf[1];
@@ -71,7 +96,7 @@ static void trackball_i2c_poll(struct k_work *work) {
     }
 
 reschedule:
-    k_work_schedule(&data->poll_work, K_MSEC(cfg->poll_period_ms));
+    k_work_schedule(&data->poll_work, K_MSEC(period_ms));
 }
 
 static int trackball_i2c_init(const struct device *dev) {
@@ -85,15 +110,20 @@ static int trackball_i2c_init(const struct device *dev) {
     }
 
     /* Not fatal: the trackball may be plugged or powered after the keyboard. */
+    data->dev = dev;
     if (i2c_reg_read_byte_dt(&cfg->bus, TRACKBALL_REG_WHO_AM_I, &who_am_i) != 0) {
-        LOG_WRN("Trackball not responding at 0x%02x, polling anyway", cfg->bus.addr);
+        LOG_WRN("Trackball not responding at 0x%02x, probing every %u ms", cfg->bus.addr,
+                cfg->absent_poll_period_ms);
+        data->failures = TRACKBALL_ABSENT_THRESHOLD;
     } else if (who_am_i != TRACKBALL_WHO_AM_I) {
         LOG_WRN("Unexpected WHO_AM_I 0x%02x", who_am_i);
     }
 
-    data->dev = dev;
     k_work_init_delayable(&data->poll_work, trackball_i2c_poll);
-    k_work_schedule(&data->poll_work, K_MSEC(cfg->poll_period_ms));
+    k_work_schedule(&data->poll_work,
+                    K_MSEC(data->failures >= TRACKBALL_ABSENT_THRESHOLD
+                               ? cfg->absent_poll_period_ms
+                               : cfg->poll_period_ms));
 
     return 0;
 }
@@ -103,6 +133,7 @@ static int trackball_i2c_init(const struct device *dev) {
     static const struct trackball_i2c_config trackball_i2c_config_##n = {                          \
         .bus = I2C_DT_SPEC_INST_GET(n),                                                            \
         .poll_period_ms = DT_INST_PROP(n, poll_period_ms),                                         \
+        .absent_poll_period_ms = DT_INST_PROP(n, absent_poll_period_ms),                           \
     };                                                                                             \
     DEVICE_DT_INST_DEFINE(n, trackball_i2c_init, NULL, &trackball_i2c_data_##n,                    \
                           &trackball_i2c_config_##n, POST_KERNEL, CONFIG_INPUT_INIT_PRIORITY,      \

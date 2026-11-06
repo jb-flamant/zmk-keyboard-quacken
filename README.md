@@ -202,6 +202,15 @@ its motion and buttons as a HID mouse.
 - While the Mouse layer and E are held, the trackball scrolls vertically
   (horizontal motion is ignored); tune the speed with `&zip_scroll_scaler 1 20` in the overlay.
 - Axis directions are not validated on hardware yet.
+- The trackball may be left unplugged: after 3 unanswered reads it is probed
+  only once per second (`absent-poll-period-ms`), and normal polling resumes as
+  soon as it answers. Unanswered reads (NACK) on the shared `i2c0` bus could
+  make the next read of the IO expander fail.
+- On all Quacken Flex firmwares, the right half is scanned by
+  `quacken,kscan-gpio-direct-resilient` (`src/drivers/kscan/`), a copy of ZMK’s
+  `zmk,kscan-gpio-direct` that retries after a failed read. The upstream driver
+  stops scanning for good on the first I2C error, leaving the right half dead
+  until the next reset.
 
 [trackball]: https://github.com/jb-flamant/trackball/tree/feat/i2c-target
 

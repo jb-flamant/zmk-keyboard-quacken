@@ -88,8 +88,10 @@
             ;
     };
 
+    // The right half is read through the PCAL6524 IO expander on i2c0, a bus
+    // shared with the optional trackball: use a driver that survives I2C errors.
     kscan_right: kscan_right {
-        compatible = "zmk,kscan-gpio-direct";
+        compatible = "quacken,kscan-gpio-direct-resilient";
         input-gpios
             // Outer (Bottom / Home / Top)
             = <&io_exp_gpio  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
